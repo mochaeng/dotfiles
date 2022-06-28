@@ -111,8 +111,8 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:  "
-set $ws2 "2:  "
+set $ws1 "1"
+set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
 set $ws5 "5"
@@ -147,8 +147,8 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # I3 GAPS
-gaps inner 6
-gaps outer 6
+gaps inner 3
+gaps outer 3
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -197,15 +197,18 @@ client.focused          #ffffff   #ffffff     #000000   #c8395b
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-        status_command i3status -c /home/campos/.config/i3status/i3status.conf
-}
+# bar {
+#        status_command i3status -c /home/campos/.config/i3status/i3status.conf
+#}
+
+# using polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Display wallpaper
-exec_always feh --bg-fill ~/Pictures/wallpapers/luo.jpg
+exec_always feh --bg-fill ~/Pictures/screenshots/fish.jpg
 
 # i3-lock
 bindsym $mod+x exec i3lock
 
-# Remove "weird" background screen behind
+# Remove "weird" background behind screens
 default_border pixel
