@@ -44,6 +44,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+
 # start a terminal
 bindsym $mod+Return exec alacritty
 
@@ -52,7 +53,7 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 # bindsym $mod+d exec --no-startup-id dmenu_run
-bindsym $mod+d exec rofi -show run
+bindsym $mod+d exec rofi -show run -hide-scrollbar -lines 3 -eh 1 -width 40 -font "Roboto Mono 18"
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -147,8 +148,8 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # I3 GAPS
-gaps inner 3
-gaps outer 3
+gaps inner 6
+gaps outer 6
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -191,7 +192,7 @@ set $textcolor  #000000
 set $ubcolor    #c8395b 
 
 # class                 border    background  text      indicator child_border
-client.focused          #ffffff   #ffffff     #000000   #c8395b 
+client.focused          #ffffff   #ffffff     #000000   #b77896
 # client.urgent               #900000 #900000 #ffffff #c8395b
 
 
@@ -205,10 +206,26 @@ client.focused          #ffffff   #ffffff     #000000   #c8395b
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Display wallpaper
-exec_always feh --bg-fill ~/Pictures/screenshots/fish.jpg
+exec_always feh --bg-max ~/Pictures/screenshots/dog.jpg
 
 # i3-lock
 bindsym $mod+x exec i3lock
 
 # Remove "weird" background behind screens
 default_border pixel
+
+# Use picom (windos compositor)
+exec_always picom -f
+
+# You have to click to change the focus
+focus_follows_mouse no
+
+# disable titlebar
+new_window pixel 1
+new_float pixel 1
+
+# cycle between workspace
+bindsym $mod+n workspace next
+bindsym $mod+p workspace prev
+
+popup_during_fullscreen smart
