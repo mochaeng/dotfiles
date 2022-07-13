@@ -1,6 +1,6 @@
 format = """
-[\\[ $directory$rust$package\\]](bold blue)
-[- λ](bold blue) """
+[┏(bold blue)\\[ $directory$rust$package\\]](bold blue)
+[┗> λ(bold blue)](bold blue) """
 
 [character]
 success_symbol = " [λ.](bold red)"

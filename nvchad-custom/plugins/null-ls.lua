@@ -1,14 +1,26 @@
+-- Responsible for formatting:
+
 local null_ls = require "null-ls"
 local b = null_ls.builtins
 
+--
+-- nulls.formatting_sync
+--
+
 local sources = {
    -- Lua
-   -- https://github.com/johnnymorganz/stylua
    b.formatting.stylua,
    --b.diagnostics.luacheck.with { extra_args = { "--globals vim" } },
 
    -- Rust
    b.formatting.rustfmt,
+
+   -- Cpp
+   --b.formatting.clang_format,
+   -- b.formatting.clang_format.with { extra_filetypes = { "cuda" } },
+   -- Golang
+   --b.formatting.gofmt,
+   -- b.formatting.goimports,
 }
 
 local M = {}

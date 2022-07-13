@@ -8,8 +8,9 @@ local override = require "custom.plugins.configs"
 -- example of changing theme:
 M.ui = {
    theme = "catppuccin", -- default theme
-   theme_toggle = { "ayu-dark", "catppuccin" },
-   transparency = false,
+   --theme_toggle = { "", "catppuccin" },
+   --transparency = true,
+   --tabufline_enabled = false,
 }
 
 M.plugins = {

@@ -206,26 +206,29 @@ client.focused          #ffffff   #ffffff     #000000   #b77896
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Display wallpaper
-exec_always feh --bg-max ~/Pictures/screenshots/dog.jpg
-
+exec_always feh --bg-fill ~/Pictures/genshin/studio.jpg
 # i3-lock
 bindsym $mod+x exec i3lock
 
 # Remove "weird" background behind screens
-default_border pixel
+default_border pixel 4
 
 # Use picom (windos compositor)
-exec_always picom -f
+# exec_always picom --no-fading-openclose
+exec_always picom --fade-in-step=1 --fade-out-step=1 --fade-delta=0
 
 # You have to click to change the focus
 focus_follows_mouse no
 
 # disable titlebar
-new_window pixel 1
-new_float pixel 1
+new_window pixel 4
+new_float pixel 4
 
 # cycle between workspace
 bindsym $mod+n workspace next
 bindsym $mod+p workspace prev
 
 popup_during_fullscreen smart
+
+default_floating_border pixel 4
+# hide_edge_borders smart
