@@ -8,6 +8,7 @@ treesitter.setup({
 		"c",
 		"lua",
 		"rust",
+		"ocaml",
 		"javascript",
 		"html",
 		"css",
