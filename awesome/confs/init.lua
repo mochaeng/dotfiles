@@ -27,5 +27,7 @@ editor_cmd = terminal .. " -e " .. editor
 
 modkey = "Mod4"
 
+awesome.set_preferred_icon_size(32)
+
 require("confs.autostart")
 require("confs.keys")

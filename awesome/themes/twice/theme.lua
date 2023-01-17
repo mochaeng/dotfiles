@@ -8,8 +8,7 @@ local dpi = require("beautiful.xresources").apply_dpi
 
 -- {{{ Main
 local theme = {}
-theme.wallpaper = "~/Pictures/UU/Twitch/wallpaper.png"
--- }}}
+theme.wallpaper = "~/Pictures/2b_zerotwo.png"
 
 -- {{{ Styles
 theme.font = "Hack Nerd Font 10"

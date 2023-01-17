@@ -3,6 +3,12 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local mylauncher = require("ui.menu")
+local widgets = require("widgets")
+
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
+local helpers = require("confs.helpers")
+local my_tasklist = require("ui.bars.tasklist")
 
 ------- ?? Discover
 local tasklist_buttons = gears.table.join(
@@ -13,17 +19,19 @@ local tasklist_buttons = gears.table.join(
 			c:emit_signal("request::activate", "tasklist", { raise = true })
 		end
 	end),
+
 	awful.button({}, 3, function()
 		awful.menu.client_list({ theme = { width = 250 } })
 	end),
+
 	awful.button({}, 4, function()
 		awful.client.focus.byidx(1)
 	end),
+
 	awful.button({}, 5, function()
 		awful.client.focus.byidx(-1)
 	end)
 )
-
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
 	awful.button({}, 1, function(t)
@@ -59,17 +67,18 @@ local function set_wallpaper(s)
 		gears.wallpaper.maximized(wallpaper, s, false)
 	end
 end
+
 ---------------
 
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
--- {{{ Wibar
--- Create a textclock widget
-mytextclock = wibox.widget.textclock()
-
-praiseWidget = wibox.widget.textbox()
-praiseWidget.text = "I love Chaeyoung!"
+-- -- Keyboard map indicator and switcher
+-- mykeyboardlayout = awful.widget.keyboardlayout()
+--
+-- -- {{{ Wibar
+-- -- Create a textclock widget
+-- mytextclock = wibox.widget.textclock()
+--
+-- praiseWidget = wibox.widget.textbox()
+-- praiseWidget.text = "I love Chaeyoung!"
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
@@ -86,26 +95,6 @@ awful.screen.connect_for_each_screen(function(s)
 	-- Each screen has its own tag table.
 	awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
-	-- Create a promptbox for each screen
-	s.mypromptbox = awful.widget.prompt()
-	-- Create an imagebox widget which will contain an icon indicating which layout we're using.
-	-- We need one layoutbox per screen.
-	s.mylayoutbox = awful.widget.layoutbox(s)
-	s.mylayoutbox:buttons(gears.table.join(
-		awful.button({}, 1, function()
-			awful.layout.inc(1)
-		end),
-		awful.button({}, 3, function()
-			awful.layout.inc(-1)
-		end),
-		awful.button({}, 4, function()
-			awful.layout.inc(1)
-		end),
-		awful.button({}, 5, function()
-			awful.layout.inc(-1)
-		end)
-	))
-
 	-- Create a taglist widget
 	s.mytaglist = awful.widget.taglist({
 		screen = s,
@@ -113,34 +102,83 @@ awful.screen.connect_for_each_screen(function(s)
 		buttons = taglist_buttons,
 	})
 
-	-- Create a tasklist widget
-	s.mytasklist = awful.widget.tasklist({
-		screen = s,
-		filter = awful.widget.tasklist.filter.currenttags,
-		buttons = tasklist_buttons,
-	})
+	s.mytasklist = my_tasklist(s)
 
 	-- Create the wibox
-	s.mywibox = awful.wibar({ position = "top", screen = s })
+	s.wibox = awful.wibar({
+		position = "bottom",
+		screen = s,
+		width = s.geometry.width - 10,
+		-- height = beautiful.wibar_height,
+		height = dpi(36),
+		shape = function(cr, width, height)
+			gears.shape.rounded_rect(cr, width, height, 0)
+		end,
+		-- shape = gears.shape.rounded_bar,
+		bg = "#222",
+	})
+
+	-- s.wibox.y = s.geometry.height - 37
+
+	local realbar = wibox.widget({
+		{
+			layout = wibox.layout.align.horizontal,
+			expand = "none",
+			{
+				{
+					layout = wibox.layout.fixed.horizontal,
+					-- text_taglist(s),
+					s.mytaglist,
+				},
+				left = beautiful.wibar_spacing,
+				right = beautiful.wibar_spacing,
+				widget = wibox.container.margin,
+			},
+			{
+				{ -- Middle widgets
+					layout = wibox.layout.fixed.horizontal,
+					spacing = beautiful.wibar_spacing,
+					s.mytasklist,
+				},
+				left = beautiful.wibar_spacing,
+				right = beautiful.wibar_spacing,
+				widget = wibox.container.margin,
+			},
+			{
+				{ -- Right widgets
+					layout = wibox.layout.fixed.horizontal,
+					spacing = beautiful.wibar_spacing,
+					widgets.textclock,
+					widgets.memory,
+					widgets.momo,
+					widgets.chae,
+					widgets.mysystray,
+					widgets.layouts,
+				},
+				left = beautiful.wibar_spacing,
+				right = beautiful.wibar_spacing,
+				widget = wibox.container.margin,
+			},
+		},
+		shape = s.wibox.shape,
+		bg = beautiful.wibar_bg,
+		widget = wibox.container.background,
+		forced_width = s.geometry.width,
+	})
 
 	-- Add widgets to the wibox
-	s.mywibox:setup({
+	s.wibox:setup({
 		layout = wibox.layout.align.horizontal,
-		{ -- Left widgets
-			layout = wibox.layout.fixed.horizontal,
-			mylauncher,
-			s.mytaglist,
-			s.mypromptbox,
-		},
-		s.mytasklist, -- Middle widget
-		{ -- Right widgets
-			layout = wibox.layout.fixed.horizontal,
-			mykeyboardlayout,
-			wibox.widget.systray(),
-			mytextclock,
-			praiseWidget,
-			s.mylayoutbox,
+		expand = "none",
+		{
+			{
+				layout = wibox.layout.fixed.horizontal,
+				spacing = beautiful.wibar_spacing,
+				realbar,
+			},
+			left = 1,
+			right = 1,
+			widget = wibox.container.margin,
 		},
 	})
 end)
--- }}}

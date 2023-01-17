@@ -149,3 +149,9 @@ client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
 -- }}}
+
+-- solving blurry effect with some icons (e.g. firefox)
+awesome.set_preferred_icon_size(32)
+
+collectgarbage("setpause", 110)
+collectgarbage("setstepmul", 1000)
