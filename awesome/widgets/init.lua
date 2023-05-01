@@ -4,32 +4,25 @@ local gears = require("gears")
 local helpers = require("confs.helpers")
 local dpi = require("beautiful").xresources.apply_dpi
 
-local memory = require("widgets/memory")
+local memory = require("widgets.memory")
+local cpu_usage = require("widgets.cpu_usage")
+local cpu_temperature = require("widgets.cpu_temp")
 
 local widgets = {}
-
--- Create a promptbox for each screen
--- widgets.mypromptbox = awful.widget.prompt()
 
 -- Create an imagebox widget which will contain an icon indicating which layout we're using.
 -- We need one layoutbox per screen.
 
 -- layoutbox (the thing that show layout options)
-local layoutbox = awful.widget.layoutbox(s)
+local layoutbox = awful.widget.layoutbox()
+
 layoutbox:buttons(gears.table.join(
-	awful.button({}, 1, function()
-		awful.layout.inc(1)
-	end),
-	awful.button({}, 3, function()
-		awful.layout.inc(-1)
-	end),
-	awful.button({}, 4, function()
-		awful.layout.inc(1)
-	end),
-	awful.button({}, 5, function()
-		awful.layout.inc(-1)
-	end)
+	awful.button({}, 1, function() awful.layout.inc(1) end),
+	awful.button({}, 3, function() awful.layout.inc(-1) end),
+	awful.button({}, 4, function() awful.layout.inc(1) end),
+	awful.button({}, 5, function() awful.layout.inc(-1) end)
 ))
+
 widgets.layouts = {
 	layoutbox,
 	top = 6,
@@ -48,7 +41,26 @@ local mytextclock = wibox.widget.textclock()
 widgets.textclock = helpers.rounded_it(mytextclock, "#66545e")
 
 -- memory widget
-widgets.memory = helpers.rounded_it(memory, "#aa6f73", "#191919")
+widgets.memory = helpers.rounded_it(wibox.widget {
+	memory.icon,
+	wibox.widget {
+		memory.widget,
+		widget = wibox.container.background
+	},
+	layout = wibox.layout.fixed.horizontal
+}, "#aa6f73", "#191919")
+
+widgets.cpu_usage = helpers.rounded_it(wibox.widget {
+	cpu_usage.icon,
+	wibox.widget {
+		cpu_usage.widget,
+		widget = wibox.container.background
+	},
+	layout = wibox.layout.fixed.horizontal
+}, "#aa6f54", "#191919")
+
+
+widgets.cpu_temperature = helpers.rounded_it(cpu_temperature, "#aa6f54", "#191919")
 
 -- momo's widget
 local love_momo = wibox.widget({
@@ -66,21 +78,8 @@ widgets.chae = helpers.rounded_it(love_chae, "#A10035", "#191919")
 
 -- systray
 local systray = wibox.widget.systray()
-widgets.mysystray = wibox.widget({
-	{
-		{
-			systray,
-			top = 4,
-			bottom = 4,
-			left = 2,
-			right = 2,
-			widget = wibox.container.margin,
-		},
-		bg = "#FFF",
-		widget = wibox.container.background,
-	},
-	margins = 2,
-	widget = wibox.container.margin,
-})
+local systray_margin = wibox.container.margin(systray, dpi(4), dpi(4), dpi(4), dpi(4))
+local systray_background = wibox.container.background(systray_margin, "#fff")
+widgets.mysystray = systray_background
 
 return widgets
