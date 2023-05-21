@@ -3,10 +3,12 @@ local gears = require("gears")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
+local main_menu = require("ui.menu").main_menu
+
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
 	awful.button({}, 3, function()
-		mymainmenu:toggle()
+		main_menu:toggle()
 	end),
 	awful.button({}, 4, awful.tag.viewnext),
 	awful.button({}, 5, awful.tag.viewprev)
@@ -28,7 +30,7 @@ globalkeys = gears.table.join(
 	end, { description = "focus previous by index", group = "client" }),
 
 	awful.key({ modkey }, "w", function()
-		mymainmenu:show()
+		main_menu:show()
 	end, { description = "show main menu", group = "awesome" }),
 
 	-- Layout manipulation
@@ -92,9 +94,6 @@ globalkeys = gears.table.join(
 	end, { description = "restore minimized", group = "client" }),
 
 	-- Prompt
-	awful.key({ modkey }, "r", function()
-		awful.screen.focused().mypromptbox:run()
-	end, { description = "run prompt", group = "launcher" }),
 
 	awful.key({ modkey }, "d", function()
 		awful.spawn("rofi -show drun")
@@ -108,6 +107,7 @@ globalkeys = gears.table.join(
 			history_path = awful.util.get_cache_dir() .. "/history_eval",
 		})
 	end, { description = "lua execute prompt", group = "awesome" }),
+
 	-- Menubar
 	awful.key({ modkey }, "p", function()
 		menubar.show()

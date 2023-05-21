@@ -4,7 +4,7 @@ local beautiful = require("beautiful")
 
 -- menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 
-local myawesomemenu = {
+local awesome_menu = {
 	{
 		"hotkeys",
 		function()
@@ -22,16 +22,16 @@ local myawesomemenu = {
 	},
 }
 
-local mymainmenu = awful.menu({
+local main_menu = awful.menu({
 	items = {
-		{ "awesome",       myawesomemenu, beautiful.awesome_icon },
+		{ "awesome",       awesome_menu, beautiful.awesome_icon },
 		{ "open terminal", terminal },
 	},
 })
 
-local mylauncher = awful.widget.launcher({
+local launcher = awful.widget.launcher({
 	image = beautiful.awesome_icon,
-	menu = mymainmenu,
+	menu = main_menu,
 })
 
-return mylauncher
+return { launcher = launcher, main_menu = main_menu }

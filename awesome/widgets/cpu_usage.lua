@@ -40,9 +40,9 @@ watch(script, 2, function(_, stdout)
   collectgarbage('collect')
 end)
 
-local glyph = ""
+local glyph = "󰻠"
 local cpu_usage_icon = wibox.widget {
-  font = "Hack Nerd Font 12",
+  font = "Hack Nerd Font 18",
   -- font = theme.font,
   markup = glyph .. " ",
   widget = wibox.widget.textbox()

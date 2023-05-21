@@ -38,7 +38,9 @@ widgets.keyboardlayout = mykeyboardlayout
 
 -- Create a textclock widget
 local mytextclock = wibox.widget.textclock()
-widgets.textclock = helpers.rounded_it(mytextclock, "#66545e")
+widgets.textclock = helpers.rounded_it(
+	mytextclock, Colors.lavender, Colors.crust, 2, 2
+)
 
 -- memory widget
 widgets.memory = helpers.rounded_it(wibox.widget {
@@ -48,7 +50,7 @@ widgets.memory = helpers.rounded_it(wibox.widget {
 		widget = wibox.container.background
 	},
 	layout = wibox.layout.fixed.horizontal
-}, "#aa6f73", "#191919")
+}, Colors.sky, Colors.crust, 2, 2)
 
 widgets.cpu_usage = helpers.rounded_it(wibox.widget {
 	cpu_usage.icon,
@@ -57,29 +59,42 @@ widgets.cpu_usage = helpers.rounded_it(wibox.widget {
 		widget = wibox.container.background
 	},
 	layout = wibox.layout.fixed.horizontal
-}, "#aa6f54", "#191919")
+}, Colors.red, Colors.crust, 6, 2)
 
+widgets.cpu_temperature = helpers.rounded_it(wibox.widget {
+	cpu_temperature.icon,
+	wibox.widget {
+		cpu_temperature.widget,
+		widget = wibox.container.background
+	},
+	layout = wibox.layout.fixed.horizontal
+}, "#fab387", "#191919", 2, 2)
 
-widgets.cpu_temperature = helpers.rounded_it(cpu_temperature, "#aa6f54", "#191919")
+-- widgets.cpu_temperature = helpers.rounded_it(cpu_temperature, , "#191919")
 
 -- momo's widget
 local love_momo = wibox.widget({
 	markup = "<b>I Love Momo !</b>",
 	widget = wibox.widget.textbox,
 })
-widgets.momo = helpers.rounded_it(love_momo, "#c79467", "#191919")
+widgets.momo = helpers.rounded_it(love_momo, "#a6e3a1", "#191919", 2, 2)
 
 -- Chaeyoung's widget UwU
 local love_chae = wibox.widget({
 	markup = "<b>I Love Chaeyoung !</b>",
 	widget = wibox.widget.textbox,
 })
-widgets.chae = helpers.rounded_it(love_chae, "#A10035", "#191919")
+widgets.chae = helpers.rounded_it(love_chae, "#FFF", "#191919", 2, 2)
 
 -- systray
 local systray = wibox.widget.systray()
-local systray_margin = wibox.container.margin(systray, dpi(4), dpi(4), dpi(4), dpi(4))
-local systray_background = wibox.container.background(systray_margin, "#fff")
-widgets.mysystray = systray_background
+widgets.systray = helpers.rounded_it(
+	systray, Colors.overlay1, "", 2, 2
+)
+
+local layout_box = awful.widget.layoutbox()
+widgets.layout_box = helpers.rounded_it(
+	layout_box, Colors.surface2, "", 2, 6
+)
 
 return widgets
