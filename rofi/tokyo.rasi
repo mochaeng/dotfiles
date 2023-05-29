@@ -1,0 +1,83 @@
+* {
+    font:   "RobotoMono 18";
+
+    red-cattppucin: #f38ba8;
+    lavender-cattppucin: #b4befe;
+    crust-cattppucin: #11111b;
+
+    accient-ColorText: #976490;
+    accient-colorDash: #FAB1C3;
+
+    white:    #FFFFFF;
+
+    colorText: @crust-cattppucin;
+    colorDash: @lavender-cattppucin;
+
+    background-color:   transparent;
+    text-color:         @colorText;
+
+    margin:     0px;
+    padding:    0px;
+    spacing:    10px;
+}
+
+window {
+    background-color:   @white;
+    border-color:       @white;
+
+    location:   center;
+    width:      700px;
+    x-offset:	-400px;
+    y-offset:   100px;
+    border:     25px;
+}
+
+inputbar {
+    padding:    8px 12px;
+    spacing:    12px;
+    children:   [ prompt, entry ];
+}
+
+prompt, entry, element-text, element-icon {
+    vertical-align: 0.5;
+}
+
+prompt {
+    text-color: @colorText;
+}
+
+listview {
+    lines:      8;
+    columns:    1;
+
+    fixed-height:   false;
+}
+
+element {
+    padding:    6px;
+    spacing:    8px;
+}
+
+element normal urgent {
+    text-color: @red-cattppucin;
+}
+
+element selected urgent {
+    background-color:   @red-cattppucin;
+}
+
+element selected {
+    text-color: @colorText;
+}
+
+element selected normal {
+    background-color:   @colorDash;
+}
+
+element-icon {
+    size:   0.75em;
+}
+
+element-text {
+    text-color: inherit;
+}
