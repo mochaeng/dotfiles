@@ -12,7 +12,6 @@ Some of my dotfiles throughout my Linux journey
 #### With polybar
 
 <p align="center">
-<img src=screenshots/7.png width=980></img>
 
 - [Inspiration](https://www.youtube.com/watch?v=Jn0nibjObqg)
 
